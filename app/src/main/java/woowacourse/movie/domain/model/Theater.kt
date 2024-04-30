@@ -6,4 +6,6 @@ data class Theater(
     val screens: List<Screen>,
 ) {
     fun isScreening(screen: Screen): Boolean = screens.contains(screen)
+
+    fun allScreeningTimeCount(screen: Screen): Int = screen.allScreeningTime(WeeklyScreenTimePolicy()).count()
 }
