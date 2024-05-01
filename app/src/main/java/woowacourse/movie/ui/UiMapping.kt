@@ -8,7 +8,6 @@ import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
 import java.util.Locale
 
 fun Screen.toPreviewUI(image: Image<Any>) =
@@ -55,7 +54,7 @@ fun textUiFormat(
 @BindingAdapter("app:currency")
 fun currency(
     textView: TextView,
-    seats: Seats,
+    price: Int,
 ) {
-    textView.text = String.format("%s(현장 결제)", Currency.of(Locale.getDefault().country).format(seats.totalPrice()))
+    textView.text = String.format("%s(현장 결제)", Currency.of(Locale.getDefault().country).format(price))
 }

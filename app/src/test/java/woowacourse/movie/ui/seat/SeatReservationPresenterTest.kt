@@ -38,12 +38,12 @@ class SeatReservationPresenterTest {
                 Seat(Position(1, 1), Grade.A),
                 Seat(Position(2, 2), Grade.B),
             )
-        every { mockView.showSeats(fakeSeats) } just runs
+        every { mockView.showAllSeats(fakeSeats) } just runs
 
         // when
-        presenter.loadSeats(1)
+        presenter.loadData(1)
 
         // then
-        verify(exactly = 1) { mockView.showSeats(fakeSeats) }
+        verify(exactly = 1) { mockView.showAllSeats(fakeSeats) }
     }
 }
