@@ -29,6 +29,7 @@ class ReservationCompleteActivityTest {
         ActivityScenarioRule<ReservationCompleteActivity>(
             Intent(ApplicationProvider.getApplicationContext(), ReservationCompleteActivity::class.java).apply {
                 putExtra("reservationId", testFixtureReservationId())
+                putExtra("theaterId", 1)
             },
         )
 
@@ -54,7 +55,7 @@ class ReservationCompleteActivityTest {
 
     @Test
     fun showTheReservedSeats() {
-        onView(withId(R.id.tv_reserved_seats)).check(matches(withText("A1,B2")))
+        onView(withId(R.id.tv_reservation_seats)).check(matches(withText("A1,B2")))
     }
 
     @Test
