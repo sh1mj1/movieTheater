@@ -3,11 +3,12 @@ package woowacourse.movie.ui.reservation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters
@@ -16,19 +17,12 @@ import java.util.Locale
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
     private val presenter: ReservationContract.Presenter by lazy { ReservationPresenter(this, DummyReservation, DummyTheaters()) }
-
-    private val title: TextView by lazy { findViewById(R.id.tv_reservation_title) }
-    private val date: TextView by lazy { findViewById(R.id.tv_reservation_date) }
-    private val time: TextView by lazy { findViewById(R.id.tv_reservation_time) }
-
-    private val count: TextView by lazy { findViewById(R.id.tv_reservation_count) }
-    private val reservedSeats: TextView by lazy { findViewById(R.id.tv_reservation_seats) }
-    private val theaterName: TextView by lazy { findViewById(R.id.tv_reservation_theater_name) }
-    private val amount: TextView by lazy { findViewById(R.id.tv_reservation_amount) }
+    private val binding: ActivityReservationCompleteBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reservation_complete)
 
         initView()
     }
@@ -44,19 +38,8 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
         reservation: Reservation,
         theaterName: String,
     ) {
-        with(reservation) {
-            title.text = screen.movie.title
-            count.text = getString(R.string.reserve_count).format(this.ticket.count)
-            date.text = dateTime?.date.toString()
-            time.text = dateTime?.time.toString()
-            amount.text = currency()
-            reservedSeats.text =
-                seats.seats.joinToString(
-                    separator = ",",
-                    postfix = " |",
-                ) { "${'A' + it.position.row}${it.position.col + 1}" }
-            this@ReservationCompleteActivity.theaterName.text = theaterName
-        }
+        binding.reservation = reservation
+        binding.theaterName = theaterName
     }
 
     private fun Reservation.currency(): String =
