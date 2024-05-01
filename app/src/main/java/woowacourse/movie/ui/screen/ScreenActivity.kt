@@ -2,8 +2,9 @@ package woowacourse.movie.ui.screen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.Theaters
@@ -15,6 +16,7 @@ import woowacourse.movie.ui.screen.adapter.TheaterAdapter
 
 class ScreenActivity : AppCompatActivity(), ScreenContract.View {
     private lateinit var adapter: ScreenAdapter
+    private val binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }
 
     private val screenPresenter: ScreenContract.Presenter by lazy {
         ScreenPresenter(
@@ -26,19 +28,17 @@ class ScreenActivity : AppCompatActivity(), ScreenContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         initAdapter()
         screenPresenter.loadScreen()
     }
 
     private fun initAdapter() {
-        val recyclerView = findViewById<RecyclerView>(R.id.lv_screen)
         adapter =
             ScreenAdapter { screenId ->
                 screenPresenter.loadTheaters(screenId)
             }
-        recyclerView.adapter = adapter
+        binding.adapter = adapter
     }
 
     override fun showScreens(screens: List<ScreenAd>) {
