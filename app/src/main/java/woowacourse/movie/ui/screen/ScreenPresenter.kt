@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.screen
 
+import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.repository.DummyAdvertisement
 import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.domain.repository.MovieRepository
@@ -17,11 +18,21 @@ class ScreenPresenter(
     override fun loadScreen() {
         val screens =
             screenRepository.load()
-                .map { screen -> screen.toPreviewUI(image = movieRepository.imageSrc(screen.movie.id)) }
+                .map { screen -> screen.toPreviewUI(image = movieRepository.imageSrc(screen.movie.id)) }.toMutableList()
 
         val ad = adRepository.load()
 
-        view.showScreens(screens + ad)
+        val list = mutableListOf<ScreenAd>()
+
+        (1..screens.size + screens.size / 3).map {
+            if (it % 4 == 0) {
+                list.add(ad)
+            } else {
+                list.add(screens.removeFirst())
+            }
+        }
+
+        view.showScreens(list.toList())
     }
 
     override fun loadTheaters(screenId: Int) {

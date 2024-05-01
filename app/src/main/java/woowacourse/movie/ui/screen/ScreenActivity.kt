@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.screen
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -35,9 +36,10 @@ class ScreenActivity : AppCompatActivity(), ScreenContract.View {
 
     private fun initAdapter() {
         adapter =
-            ScreenAdapter { screenId ->
-                screenPresenter.loadTheaters(screenId)
-            }
+            ScreenAdapter(
+                { screenId -> screenPresenter.loadTheaters(screenId) },
+                { adId -> Toast.makeText(this, "광고 클릭 id: $adId", Toast.LENGTH_SHORT).show() },
+            )
         binding.adapter = adapter
     }
 

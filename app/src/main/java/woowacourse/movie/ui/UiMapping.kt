@@ -1,5 +1,6 @@
 package woowacourse.movie.ui
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.domain.model.DateRange
@@ -57,4 +58,24 @@ fun currency(
     price: Int,
 ) {
     textView.text = String.format("%s(현장 결제)", Currency.of(Locale.getDefault().country).format(price))
+}
+
+@BindingAdapter("app:srcScreenAdvertisement")
+fun screenAdvertisementImage(
+    imageView: ImageView,
+    screenAd: ScreenAd,
+) {
+    when (screenAd) {
+        is ScreenAd.ScreenPreviewUi -> imageView.setImageResource(screenAd.moviePreviewUI.image.imageSource as Int)
+
+        is ScreenAd.Advertisement -> imageView.setImageResource(screenAd.advertisement.imageSource)
+    }
+}
+
+@BindingAdapter("app:dateRangeFormat")
+fun screeningDateRange(
+    textView: TextView,
+    dateRange: DateRange,
+) {
+    textView.text = dateRange.toUi()
 }

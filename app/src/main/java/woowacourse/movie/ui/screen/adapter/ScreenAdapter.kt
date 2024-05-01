@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.HolderAdvertisementBinding
+import woowacourse.movie.databinding.HolderScreenBinding
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.ScreenType
 
 class ScreenAdapter(
-    private val onItemClick: (id: Int) -> Unit,
+    private val onScreenClick: (id: Int) -> Unit,
+    private val onAdClick: (id: Int) -> Unit,
 ) : ListAdapter<ScreenAd, RecyclerView.ViewHolder>(ScreenPreviewUiDiffUtil()) {
     private lateinit var inflater: LayoutInflater
 
@@ -18,17 +20,6 @@ class ScreenAdapter(
             ((position + 1) % ADVERTISEMENT_INTERVAL == 0) -> ScreenType.ADVERTISEMENT.id
             else -> ScreenType.SCREEN.id
         }
-
-    override fun getItemCount(): Int {
-        val actualItemCount = super.getItemCount()
-        val additionalAds = actualItemCount / ADVERTISEMENT_INTERVAL
-        return actualItemCount + additionalAds
-    }
-
-    override fun getItem(position: Int): ScreenAd {
-        val adjustedPosition = position - (position / ADVERTISEMENT_INTERVAL)
-        return super.getItem(adjustedPosition)
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,13 +33,13 @@ class ScreenAdapter(
 
         return when (screenType) {
             ScreenType.SCREEN -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.holder_screen, parent, false)
-                ScreenViewHolder(view, onItemClick)
+                val binding: HolderScreenBinding = HolderScreenBinding.inflate(inflater, parent, false)
+                ScreenViewHolder(onScreenClick, binding)
             }
 
             ScreenType.ADVERTISEMENT -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.holder_advertisement, parent, false)
-                AdViewHolder(view, onItemClick)
+                val binding: HolderAdvertisementBinding = HolderAdvertisementBinding.inflate(inflater, parent, false)
+                AdvertisementViewHolder(onAdClick, binding)
             }
         }
     }
@@ -59,10 +50,10 @@ class ScreenAdapter(
     ) {
         val item = getItem(position)
 
-        if (item is ScreenAd.ScreenPreviewUi && holder is ScreenViewHolder) {
-            holder.bind(item)
-        } else if (item is ScreenAd.Advertisement && holder is AdViewHolder) {
-            holder.bind(item)
+        if (item is ScreenAd.ScreenPreviewUi) {
+            (holder as ScreenViewHolder).bind(item)
+        } else if (item is ScreenAd.Advertisement) {
+            (holder as AdvertisementViewHolder).bind(item)
         }
     }
 
