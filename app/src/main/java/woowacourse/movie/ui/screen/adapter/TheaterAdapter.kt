@@ -9,7 +9,7 @@ import woowacourse.movie.domain.model.Theater
 
 class TheaterAdapter(
     private val screen: Screen,
-    private val itemClick: (theaterId: Int) -> Unit,
+    private val itemClick: (screenId: Int, theaterId: Int) -> Unit,
 ) : ListAdapter<Theater, TheaterViewHolder>(TheaterDiffUtil()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,

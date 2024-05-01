@@ -71,7 +71,10 @@ class SeatReservationPresenter(
         throw IllegalStateException("예기치 못한 오류")
     }
 
-    override fun reserve(screenId: Int) {
+    override fun reserve(
+        screenId: Int,
+        theaterId: Int,
+    ) {
         val timeReservation = reservationRepository.loadTimeReservation(screenId)
 
         reservationRepository.save(
@@ -79,7 +82,7 @@ class SeatReservationPresenter(
             Seats(selectedSeats),
             timeReservation.dateTime,
         ).onSuccess { id ->
-            view.navigateToCompleteReservation(id)
+            view.navigateToCompleteReservation(id, theaterId)
         }.onFailure { e ->
             view.showToast(e)
         }

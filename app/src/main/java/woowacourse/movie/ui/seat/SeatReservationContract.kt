@@ -14,7 +14,10 @@ interface SeatReservationContract {
 
         fun activateReservation(boolean: Boolean)
 
-        fun navigateToCompleteReservation(reservationId: Int)
+        fun navigateToCompleteReservation(
+            reservationId: Int,
+            theaterId: Int,
+        )
 
         fun showSeatReservationFail(throwable: Throwable)
 
@@ -31,6 +34,9 @@ interface SeatReservationContract {
             seatView: android.view.View,
         )
 
-        fun reserve(screenId: Int)
+        fun reserve(
+            screenId: Int,
+            theaterId: Int,
+        )
     }
 }

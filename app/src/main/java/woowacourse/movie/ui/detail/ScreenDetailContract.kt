@@ -19,7 +19,10 @@ interface ScreenDetailContract {
             selectTimeListener: SelectTimeListener,
         )
 
-        fun navigateToSeatsReservation(timeReservationId: Int)
+        fun navigateToSeatsReservation(
+            timeReservationId: Int,
+            theaterId: Int,
+        )
 
         fun showToastMessage(e: Throwable)
 
@@ -45,6 +48,9 @@ interface ScreenDetailContract {
 
         fun minusTicket()
 
-        fun reserve(screenId: Int)
+        fun reserve(
+            screenId: Int,
+            theaterId: Int,
+        )
     }
 }

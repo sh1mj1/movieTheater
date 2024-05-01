@@ -50,8 +50,8 @@ class ScreenActivity : AppCompatActivity(), ScreenContract.View {
         theaters: Theaters,
     ) {
         val theaterAdapter =
-            TheaterAdapter(screen) {
-                ScreenDetailActivity.startActivity(this, screen.id)
+            TheaterAdapter(screen) { screenId, theaterId ->
+                ScreenDetailActivity.startActivity(this, screenId, theaterId)
             }
         val theaterBottomSheet = TheaterBottomSheet(theaterAdapter)
 

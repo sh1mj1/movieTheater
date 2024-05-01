@@ -31,13 +31,15 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_reservation)
 
-        val id = intent.getIntExtra(TIME_RESERVATION_ID, DEFAULT_ID)
-        presenter.loadSeats(id)
-        presenter.loadTimeReservations(id)
+        val timeReservationId = intent.getIntExtra(TIME_RESERVATION_ID, DEFAULT_TIME_RESERVATION_ID)
+        val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+
+        presenter.loadSeats(timeReservationId)
+        presenter.loadTimeReservations(timeReservationId)
         totalPrice.text = "0원"
 
         reserveCompleteBtn.setOnClickListener {
-            presenter.reserve(id)
+            presenter.reserve(timeReservationId, theaterId)
         }
     }
 
@@ -93,8 +95,11 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun navigateToCompleteReservation(reservationId: Int) {
-        ReservationCompleteActivity.startActivity(this, reservationId)
+    override fun navigateToCompleteReservation(
+        reservationId: Int,
+        theaterId: Int,
+    ) {
+        ReservationCompleteActivity.startActivity(this, reservationId, theaterId)
     }
 
     override fun showSeatReservationFail(throwable: Throwable) {
@@ -103,15 +108,20 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
 
     companion object {
         private const val TIME_RESERVATION_ID = "timeReservationId"
-        private const val DEFAULT_ID = -1
+        private const val PUT_EXTRA_THEATER_ID_KEY = "theaterId"
+
+        private const val DEFAULT_TIME_RESERVATION_ID = -1
+        private const val DEFAULT_THEATER_ID = -1
 
         fun startActivity(
             context: Context,
             timeReservationId: Int,
+            theaterId: Int,
         ) {
             val intent =
                 Intent(context, SeatReservationActivity::class.java).apply {
                     putExtra(TIME_RESERVATION_ID, timeReservationId)
+                    putExtra(PUT_EXTRA_THEATER_ID_KEY, theaterId)
                 }
             context.startActivity(intent)
         }

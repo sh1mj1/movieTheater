@@ -83,7 +83,10 @@ class ScreenDetailPresenter(
         }
     }
 
-    override fun reserve(screenId: Int) {
+    override fun reserve(
+        screenId: Int,
+        theaterId: Int,
+    ) {
         reservationRepository.saveTimeReservation(
             screen(screenId),
             count = ticket.count,
@@ -93,7 +96,7 @@ class ScreenDetailPresenter(
                     screenTimePolicy.screeningTimes(dateRange.allDates()[datePosition])[timePosition],
                 ),
         ).onSuccess { timeReservationId ->
-            view.navigateToSeatsReservation(timeReservationId)
+            view.navigateToSeatsReservation(timeReservationId, theaterId)
         }.onFailure { e ->
             view.showToastMessage(e)
         }
