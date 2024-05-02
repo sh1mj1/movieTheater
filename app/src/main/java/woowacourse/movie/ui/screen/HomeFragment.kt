@@ -1,11 +1,12 @@
 package woowacourse.movie.ui.screen
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityMainBinding
+import androidx.fragment.app.Fragment
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.Theaters
@@ -15,9 +16,9 @@ import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.screen.adapter.ScreenAdapter
 import woowacourse.movie.ui.screen.adapter.TheaterAdapter
 
-class ScreenActivity : AppCompatActivity(), ScreenContract.View {
+class HomeFragment : Fragment(), ScreenContract.View {
     private lateinit var adapter: ScreenAdapter
-    private val binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }
+    private lateinit var binding: FragmentHomeBinding
 
     private val screenPresenter: ScreenContract.Presenter by lazy {
         ScreenPresenter(
@@ -27,18 +28,22 @@ class ScreenActivity : AppCompatActivity(), ScreenContract.View {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater)
         initAdapter()
         screenPresenter.loadScreen()
+        return binding.root
     }
 
     private fun initAdapter() {
         adapter =
             ScreenAdapter(
                 { screenId -> screenPresenter.loadTheaters(screenId) },
-                { adId -> Toast.makeText(this, "광고 클릭 id: $adId", Toast.LENGTH_SHORT).show() },
+                { adId -> Toast.makeText(activity, "광고 클릭 id: $adId", Toast.LENGTH_SHORT).show() },
             )
         binding.adapter = adapter
     }
@@ -53,11 +58,12 @@ class ScreenActivity : AppCompatActivity(), ScreenContract.View {
     ) {
         val theaterAdapter =
             TheaterAdapter(screen) { screenId, theaterId ->
-                ScreenDetailActivity.startActivity(this, screenId, theaterId)
+                ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
             }
+
         val theaterBottomSheet = TheaterBottomSheet(theaterAdapter)
 
         theaterAdapter.submitList(theaters.theaters)
-        theaterBottomSheet.show(supportFragmentManager, "theaterBottomSheet")
+        theaterBottomSheet.show(parentFragmentManager, "theaterBottomSheet")
     }
 }
