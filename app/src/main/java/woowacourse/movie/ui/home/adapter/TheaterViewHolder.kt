@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.screen.adapter
+package woowacourse.movie.ui.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderTheaterBinding

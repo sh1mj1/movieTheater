@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.screen
+package woowacourse.movie.ui.home
 
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.repository.DummyAdvertisement
@@ -8,13 +8,13 @@ import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.ui.toPreviewUI
 
-class ScreenPresenter(
-    private val view: ScreenContract.View,
+class HomePresenter(
+    private val view: HomeContract.View,
     private val movieRepository: MovieRepository,
     private val screenRepository: ScreenRepository,
     private val adRepository: DummyAdvertisement = DummyAdvertisement(),
     private val theaterRepository: TheaterRepository = DummyTheaters(),
-) : ScreenContract.Presenter {
+) : HomeContract.Presenter {
     override fun loadScreen() {
         val screens =
             screenRepository.load()

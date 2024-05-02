@@ -1,13 +1,14 @@
-package woowacourse.movie
+package woowacourse.movie.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.ui.ReservationHistoryFragment
-import woowacourse.movie.ui.SettingFragment
-import woowacourse.movie.ui.screen.HomeFragment
+import woowacourse.movie.ui.home.HomeFragment
+import woowacourse.movie.ui.reservationhistory.ReservationHistoryFragment
+import woowacourse.movie.ui.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }

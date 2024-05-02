@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.screen
+package woowacourse.movie.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,15 +13,15 @@ import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.domain.repository.DummyMovies
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.ui.detail.ScreenDetailActivity
-import woowacourse.movie.ui.screen.adapter.ScreenAdapter
-import woowacourse.movie.ui.screen.adapter.TheaterAdapter
+import woowacourse.movie.ui.home.adapter.ScreenAdapter
+import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
-class HomeFragment : Fragment(), ScreenContract.View {
+class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var adapter: ScreenAdapter
     private lateinit var binding: FragmentHomeBinding
 
-    private val screenPresenter: ScreenContract.Presenter by lazy {
-        ScreenPresenter(
+    private val homePresenter: HomeContract.Presenter by lazy {
+        HomePresenter(
             this,
             DummyMovies(),
             DummyScreens(),
@@ -35,14 +35,14 @@ class HomeFragment : Fragment(), ScreenContract.View {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
         initAdapter()
-        screenPresenter.loadScreen()
+        homePresenter.loadScreen()
         return binding.root
     }
 
     private fun initAdapter() {
         adapter =
             ScreenAdapter(
-                { screenId -> screenPresenter.loadTheaters(screenId) },
+                { screenId -> homePresenter.loadTheaters(screenId) },
                 { adId -> Toast.makeText(activity, "광고 클릭 id: $adId", Toast.LENGTH_SHORT).show() },
             )
         binding.adapter = adapter

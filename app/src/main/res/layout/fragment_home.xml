@@ -7,7 +7,7 @@
 
         <variable
             name="adapter"
-            type="woowacourse.movie.ui.screen.adapter.ScreenAdapter" />
+            type="woowacourse.movie.ui.home.adapter.ScreenAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

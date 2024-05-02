@@ -1,10 +1,10 @@
-package woowacourse.movie.ui.screen
+package woowacourse.movie.ui.home
 
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.Theaters
 
-interface ScreenContract {
+interface HomeContract {
     interface View {
         fun showScreens(screens: List<ScreenAd>)
 

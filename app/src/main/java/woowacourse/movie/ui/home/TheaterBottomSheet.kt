@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.screen
+package woowacourse.movie.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.ui.screen.adapter.TheaterAdapter
+import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 class TheaterBottomSheet(private val theaterAdapter: TheaterAdapter) : BottomSheetDialogFragment() {
     override fun onCreateView(

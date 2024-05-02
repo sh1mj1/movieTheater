@@ -9,16 +9,18 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.repository.FakeMovieRepository
 import woowacourse.movie.domain.repository.FakeScreenRepository
+import woowacourse.movie.ui.home.HomeContract
+import woowacourse.movie.ui.home.HomePresenter
 
-class ScreenPresenterTest {
-    private lateinit var view: ScreenContract.View
-    private lateinit var presenter: ScreenContract.Presenter
+class HomePresenterTest {
+    private lateinit var view: HomeContract.View
+    private lateinit var presenter: HomeContract.Presenter
 
     @BeforeEach
     fun setUp() {
-        view = mockk<ScreenContract.View>()
+        view = mockk<HomeContract.View>()
         presenter =
-            ScreenPresenter(
+            HomePresenter(
                 view = view,
                 movieRepository = FakeMovieRepository(),
                 screenRepository = FakeScreenRepository(),
