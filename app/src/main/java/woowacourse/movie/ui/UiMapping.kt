@@ -66,7 +66,7 @@ fun screenAdvertisementImage(
     screenAd: ScreenAd,
 ) {
     when (screenAd) {
-        is ScreenAd.ScreenPreviewUi -> imageView.setImageResource(screenAd.moviePreviewUI.image.imageSource as Int)
+        is ScreenAd.ScreenPreviewUi -> screenPoster(imageView, screenAd.moviePreviewUI.image)
 
         is ScreenAd.Advertisement -> imageView.setImageResource(screenAd.advertisement.imageSource)
     }
@@ -78,4 +78,12 @@ fun screeningDateRange(
     dateRange: DateRange,
 ) {
     textView.text = dateRange.toUi()
+}
+
+@BindingAdapter("app:srcScreenPoster")
+fun screenPoster(
+    imageView: ImageView,
+    image: Image<Any>,
+) {
+    imageView.setImageResource(image.imageSource as Int)
 }
