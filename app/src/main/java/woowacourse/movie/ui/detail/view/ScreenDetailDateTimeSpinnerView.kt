@@ -98,32 +98,6 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
             }
     }
 
-    private fun initDateSpinnerSelection(
-        screenTimePolicy: ScreenTimePolicy,
-        presenter: ScreenDetailContract.Presenter,
-    ) {
-        dateSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    val date = dateAdapter.getItem(position)
-                    date?.let {
-                        timeAdapter.clear()
-                        timeAdapter.addAll(screenTimePolicy.screeningTimes(date).toList())
-                    }
-                    presenter.saveDatePosition(position)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.e("ScreenDetailDateTimeSpinnerView", "Nothing Selected")
-                }
-            }
-    }
-
     private fun initTimeSpinnerSelection(selectTimeListener: SelectTimeListener) {
         timeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -134,24 +108,6 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
                     id: Long,
                 ) {
                     selectTimeListener.selectTime(position)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.e("ScreenDetailDateTimeSpinnerView", "Nothing Selected")
-                }
-            }
-    }
-
-    private fun initTimeSpinnerSelection(presenter: ScreenDetailContract.Presenter) {
-        timeSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    presenter.saveTimePosition(position)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
