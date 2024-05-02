@@ -116,7 +116,7 @@
             android:layout_height="0dp"
             android:background="@color/complete_deactivated"
             android:enabled="false"
-            android:onClick="@{() -> presenter.reserve(timeReservation.id, theaterId)}"
+            android:onClick="@{() -> presenter.attemptReservation(timeReservation.id, theaterId)}"
             android:text="@string/ok"
             android:textColor="@color/white"
             android:textSize="20dp"

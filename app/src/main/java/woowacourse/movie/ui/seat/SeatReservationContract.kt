@@ -24,6 +24,11 @@ interface SeatReservationContract {
 
         fun showSeatReservationFail(throwable: Throwable)
 
+        fun showDialog(
+            reservationId: Int,
+            theaterId: Int,
+        )
+
         fun showToast(e: Throwable)
     }
 
@@ -35,7 +40,12 @@ interface SeatReservationContract {
             seatView: android.view.View,
         )
 
-        fun reserve(
+        fun attemptReservation(
+            screenId: Int,
+            theaterId: Int,
+        )
+
+        fun completeReservation(
             screenId: Int,
             theaterId: Int,
         )

@@ -24,5 +24,10 @@
     <string name="screen">SCREEN</string>
     <string name="ok">확인</string>
 
+    <!-- 예매 확인 다이얼로그-->
+    <string name="check_reservation_title">예매 확인</string>
+    <string name="check_reservation_content">정말 예매하시겠습니까?</string>
+    <string name="check_reservation_complete">예매 완료</string>
+    <string name="check_reservation_cancel">취소</string>
 
 </resources>

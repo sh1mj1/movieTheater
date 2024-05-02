@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -100,6 +101,26 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
 
     override fun showSeatReservationFail(throwable: Throwable) {
         showToast(throwable)
+    }
+
+    override fun showDialog(
+        reservationId: Int,
+        theaterId: Int,
+    ) {
+        val alertDialog =
+            AlertDialog.Builder(this)
+                .setTitle(R.string.check_reservation_title)
+                .setMessage(R.string.check_reservation_content)
+                .setPositiveButton(R.string.check_reservation_complete) { _, _ ->
+                    presenter.completeReservation(reservationId, theaterId)
+                }
+                .setNegativeButton(R.string.check_reservation_cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+
+        alertDialog.show()
     }
 
     override fun showToast(e: Throwable) {

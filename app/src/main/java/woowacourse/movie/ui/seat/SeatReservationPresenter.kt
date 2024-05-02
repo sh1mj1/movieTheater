@@ -61,7 +61,14 @@ class SeatReservationPresenter(
         throw IllegalStateException("예기치 못한 오류")
     }
 
-    override fun reserve(
+    override fun attemptReservation(
+        screenId: Int,
+        theaterId: Int,
+    ) {
+        view.showDialog(screenId, theaterId)
+    }
+
+    override fun completeReservation(
         screenId: Int,
         theaterId: Int,
     ) {
